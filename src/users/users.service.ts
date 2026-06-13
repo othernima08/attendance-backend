@@ -76,6 +76,30 @@ export class UsersService {
   // ==========================================
   // BUSINESS LOGIC CRUD USERS
   // ==========================================
+  async login(loginData: any): Promise<any> {
+    const { email, password } = loginData;
+    
+    const user = await this.usersRepository.findOne({
+      where: { email },
+      relations: { department: true }
+    });
+
+    if (!user) {
+      throw new BadRequestException('Email atau password salah');
+    }
+
+    try {
+      const decryptedPassword = this.decrypt(user.password);
+      if (decryptedPassword !== password) {
+        throw new BadRequestException('Email atau password salah');
+      }
+    } catch (error) {
+      throw new BadRequestException('Email atau password salah');
+    }
+
+    const { password: _, reset_token, reset_token_expires, ...safeUser } = user;
+    return safeUser;
+  }
 
   async create(userData: any): Promise<User> {
     const { full_name, email, password, profile_picture, department_id } = userData;

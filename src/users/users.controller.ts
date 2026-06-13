@@ -5,6 +5,11 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Post('/login')
+  login(@Body() loginData: any) {
+    return this.usersService.login(loginData);
+  }
+
   @Post()
   create(@Body() userData: any) {
     return this.usersService.create(userData);
