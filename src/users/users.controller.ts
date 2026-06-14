@@ -40,12 +40,12 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @Post('forgot-password')
+  @Post('/forgot-password')
   forgotPassword(@Body('email') email: string) {
     return this.usersService.forgotPassword(email);
   }
 
-  @Post('reset-password')
+  @Post('/reset-password')
   resetPassword(
     @Body('token') token: string,
     @Body('new_password') new_password: string,
