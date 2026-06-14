@@ -6,7 +6,7 @@ export class AttendanceRecords {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.attendance_records)
+  @ManyToOne(() => User, (user) => user.attendance_records, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
